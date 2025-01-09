@@ -63,7 +63,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="img/tablogo.png" type="image/png">
+    <link rel="icon" href="img/wq-tablogo.png" type="image/png">
 
     <title>Response Display</title>
     <style>
@@ -176,7 +176,7 @@ $conn->close();
 <div class="main-section">
     <h1 id="displayLabel"><?php echo $questionText; ?></h1>
     <div class="image-container">
-        <img src="img/tablogo2.png" class="tab-logo" alt="Tab Logo">
+        <img src="img/wq-tablogo.png" class="tab-logo" alt="Tab Logo">
         <img src="img/qrcode.png" class="qr-code" alt="Join Quiz QR Code">
     </div>
     <button class="reset-button" id="resetButton">Reset Responses</button>
@@ -256,7 +256,7 @@ $conn->close();
 
     function updateResponses() {
         $.ajax({
-            url: 'responses.php?action=fetch_responses',
+            url: 'index.php?action=fetch_responses',
             method: 'GET',
             dataType: 'json',
             success: function(responses) {
@@ -281,7 +281,7 @@ $conn->close();
 
     function fetchQuestionText() {
         $.ajax({
-            url: 'responses.php?action=fetch_question',
+            url: 'index.php?action=fetch_question',
             method: 'GET',
             dataType: 'json',
             success: function(response) {
@@ -301,7 +301,7 @@ $conn->close();
 
         resetButton.addEventListener('click', function() {
             if (confirm('Are you sure you want to delete all responses?')) {
-                window.location.href = 'reset_responses.php';
+                window.location.href = 'reset_index.php';
             }
         });
 
