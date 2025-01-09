@@ -1,16 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "quizsystem";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require 'config.php';
 
 if (isset($_GET['action']) && $_GET['action'] === 'fetch_responses') {
     $sql = "SELECT responses_text FROM responses";
