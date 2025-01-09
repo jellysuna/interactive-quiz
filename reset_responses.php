@@ -12,7 +12,7 @@ if ($conn->query($sql) === TRUE) {
 
 $conn->close();
 
-// Redirect back to responses.php
-header("Location: responses.php");
+// Redirect back to index.php
+header("Location: index.php");
 exit();
 ?>

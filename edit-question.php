@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="img/tablogo.png" type="image/png">
+    <link rel="icon" href="img/wq-tablogo.png" type="image/png">
 
     <title>Quiz - Edit</title>
     <style>
@@ -135,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <div id="container">
-        <img id="logo" src="img/BTA png logo.png" alt="Logo"><br>
+        <img id="logo" src="img/wq-icon.png" alt="Logo">
         <div class="settings-container">
             <h1>Edit Question</h1>
             <form class="settings-form" id="settingsForm" method="post" action="">

@@ -59,7 +59,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="icon" href="img/tablogo.png" type="image/png">
+    <link rel="icon" href="img/wq-tablogo.png" type="image/png">
 
     <title>Quiz System</title>
        <style>
@@ -178,7 +178,7 @@ $conn->close();
 </head>
 <body>
      <div id="container">
-        <img id="logo" src="img/BTA png logo.png" alt="Logo"><br><br>
+        <img id="logo" src="img/wq-icon.png" alt="Logo">
         <form id="responseForm" method="post" action="questions.php">
             <label for="responseInput" id="responseLabel"><?php echo $questionText; ?></label>
             <input type="text" id="responseInput" name="responseInput" required>
@@ -217,7 +217,7 @@ $conn->close();
                         if (response.success) {
                             $('#responseInput').val('');
                             alert('Response submitted successfully!');
-                            // Optionally, you can trigger a function to update responses in responses.php
+                            // Optionally, you can trigger a function to update responses in index.php
                             updateResponsesInResponsesPHP();
                         } else {
                             alert('Failed to submit response: ' + response.error);
@@ -231,12 +231,12 @@ $conn->close();
 
             function updateResponsesInResponsesPHP() {
                 $.ajax({
-                    url: 'responses.php?action=fetch_responses',
+                    url: 'index.php?action=fetch_responses',
                     method: 'GET',
                     dataType: 'json',
                     success: function(responses) {
-                        // Update the responses display in responses.php
-                        // This function should update the responses in the responses.php page
+                        // Update the responses display in index.php
+                        // This function should update the responses in the index.php page
                         console.log("Responses updated", responses);
                     },
                     error: function(xhr, status, error) {
