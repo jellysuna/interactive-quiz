@@ -62,7 +62,7 @@ $conn->close();
     <link rel="icon" href="img/wq-tablogo.png" type="image/png">
 
     <title>Quiz System</title>
-       <style>
+    <style>
         html {
             height: 100%;
             background-image: url("img/bgimg.png");
@@ -176,6 +176,7 @@ $conn->close();
         }
     </style>
 </head>
+
 <body>
      <div id="container">
         <img id="logo" src="img/wq-icon.png" alt="Logo">

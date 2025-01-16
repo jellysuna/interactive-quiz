@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             color: #032250; 
         }
 
-         .settings-container {
+        .settings-container {
             padding: 20px 30px 40px;
             border: 1px solid #ddd;
             border-radius: 15px;
@@ -102,6 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .settings-form button:hover {
             background-color: #9DC2FA;
         }
+
         @media screen and (max-width: 768px) {
             .settings-container {
                 width: 100%; /* Increase the width */
@@ -131,8 +132,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     </style>
+    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+
 <body>
     <div id="container">
         <img id="logo" src="img/wq-icon.png" alt="Logo">
