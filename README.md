@@ -19,4 +19,4 @@ The WordCloud Quiz System consists of the following pages:
 - **CSS** for styling the user interface
 - **JavaScript** for handling the dynamic updates of the word cloud and text input interactions
 - **PHP** for backend logic and interacting with the database
-- **MySQL** (or any SQL database) for storing the quiz question and user responses
+- **MySQL** for storing the quiz question and user responses
