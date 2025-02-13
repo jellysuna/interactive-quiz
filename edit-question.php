@@ -5,23 +5,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $questionText = $_POST['question_text'];
 
     // Update the question text
-    $sql = "UPDATE question SET question_text=? WHERE question_id=1";
+    $sql = "UPDATE question SET question_text=:questionText WHERE question_id=1";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $questionText);
+
+    $stmt->bindParam(':questionText', $questionText, PDO::PARAM_STR);
 
     if ($stmt->execute()) {
         echo json_encode(['success' => true]);
     } else {
-        echo json_encode(['success' => false, 'error' => $stmt->error]);
+        echo json_encode(['success' => false, 'error' => $stmt->errorInfo()]);
     }
-    $stmt->close();
-    $conn->close();
-    exit();
+
+    $stmt->closeCursor();
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,9 +36,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         html {
             height: 100%;
             background-image: url("img/bgimg.png");
-            background-size: cover; /* Ensures the image covers the entire background */
-            background-repeat: no-repeat; /* Prevents repeating the image */
-            background-position: center center; /* Centers the background image */
+            background-size: cover;
+            /* Ensures the image covers the entire background */
+            background-repeat: no-repeat;
+            /* Prevents repeating the image */
+            background-position: center center;
+            /* Centers the background image */
         }
 
         body {
@@ -58,8 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             margin-bottom: 20px;
         }
 
-        h1{
-            color: #032250; 
+        h1 {
+            color: #032250;
         }
 
         .settings-container {
@@ -67,7 +72,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border: 1px solid #ddd;
             border-radius: 15px;
             background-color: #f9f9f9;
-            width: 550px; /* Fixed width */
+            width: 550px;
+            /* Fixed width */
             box-sizing: border-box;
         }
 
@@ -105,34 +111,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         @media screen and (max-width: 768px) {
             .settings-container {
-                width: 100%; /* Increase the width */
-                min-width: 360px; /* Ensure minimum width */
-                padding: 20px 20px 30px; /* Adjust padding */
+                width: 100%;
+                /* Increase the width */
+                min-width: 360px;
+                /* Ensure minimum width */
+                padding: 20px 20px 30px;
+                /* Adjust padding */
             }
 
-            .settings-form input, .settings-form button {
+            .settings-form input,
+            .settings-form button {
                 font-size: 14px;
             }
-             #logo {
+
+            #logo {
                 width: 100px;
                 margin-bottom: 10px;
             }
 
-            h1{
-                font-size:24px;
+            h1 {
+                font-size: 24px;
                 font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", Helvetica, Arial, sans-serif;
             }
 
-            .settings-form label{
+            .settings-form label {
                 font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue", Helvetica, Arial, sans-serif;
             }
 
-            .settings-form input{
-                font-size:16px;
+            .settings-form input {
+                font-size: 16px;
             }
         }
     </style>
-    
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -149,8 +160,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
     <script>
-        $(document).ready(function() {
-            $('#settingsForm').on('submit', function(event) {
+        $(document).ready(function () {
+            $('#settingsForm').on('submit', function (event) {
                 event.preventDefault();
                 var questionText = $('#question_text').val();
 
@@ -159,14 +170,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     type: 'POST',
                     data: { question_text: questionText },
                     dataType: 'json',
-                    success: function(response) {
+                    success: function (response) {
                         if (response.success) {
                             alert('Question updated successfully!');
                         } else {
                             alert('Error: ' + response.error);
                         }
                     },
-                    error: function(xhr, status, error) {
+                    error: function (xhr, status, error) {
                         console.error('AJAX Error: ' + error);
                     }
                 });
@@ -174,5 +185,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         });
     </script>
 </body>
+
 </html>
+
 </html>

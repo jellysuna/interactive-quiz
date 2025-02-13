@@ -3,18 +3,17 @@ require 'config.php';
 
 if (isset($_GET['action']) && $_GET['action'] === 'fetch_question') {
     $sql = "SELECT question_text FROM question WHERE question_id=1";
-    $result = $conn->query($sql);
+    $stmt = $conn->query($sql);
 
     $response = [];
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
+    if ($stmt->rowCount() > 0) {
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $response['question_text'] = $row['question_text'];
     } else {
         $response['question_text'] = "Question";
     }
 
     echo json_encode($response);
-    $conn->close();
     exit();
 }
 
@@ -23,38 +22,39 @@ if (isset($_POST['action']) && $_POST['action'] === 'submit_response') {
 
     $response = ['success' => false];
     if (!empty($responseText)) {
-        $sql = "INSERT INTO responses (responses_text) VALUES (?)";
+        $sql = "INSERT INTO responses (responses_text) VALUES (:responseText)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("s", $responseText);
+
+        $stmt->bindParam(':responseText', $responseText, PDO::PARAM_STR);
 
         if ($stmt->execute()) {
             $response['success'] = true;
         } else {
-            $response['error'] = $stmt->error;
+            $response['error'] = $stmt->errorInfo();
         }
 
-        $stmt->close();
+        $stmt->closeCursor();
     }
 
     echo json_encode($response);
-    $conn->close();
     exit();
 }
 
+// For fetching the question text again
 $sql = "SELECT question_text FROM question WHERE question_id=1";
-$result = $conn->query($sql);
+$stmt = $conn->query($sql);
 
 $questionText = "Question";
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
+if ($stmt->rowCount() > 0) {
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
     $questionText = $row['question_text'];
 }
-
-$conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -66,9 +66,12 @@ $conn->close();
         html {
             height: 100%;
             background-image: url("img/bgimg.png");
-            background-size: cover; /* Ensures the image covers the entire background */
-            background-repeat: no-repeat; /* Prevents repeating the image */
-            background-position: center center; /* Centers the background image */
+            background-size: cover;
+            /* Ensures the image covers the entire background */
+            background-repeat: no-repeat;
+            /* Prevents repeating the image */
+            background-position: center center;
+            /* Centers the background image */
         }
 
         body {
@@ -83,12 +86,14 @@ $conn->close();
             width: 150px;
             margin-bottom: 20px;
         }
+
         #container {
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 100%;
         }
+
         #responseForm {
             display: flex;
             flex-direction: column;
@@ -134,11 +139,13 @@ $conn->close();
         #responseForm button:hover {
             background-color: #9DC2FA;
         }
-        
+
         @media screen and (max-width: 768px) {
             #responseForm {
-                max-width: 90%; /* Reduce the width */
-                padding: 40px 20px; /* Adjust padding */
+                max-width: 90%;
+                /* Reduce the width */
+                padding: 40px 20px;
+                /* Adjust padding */
             }
 
             #logo {
@@ -163,13 +170,14 @@ $conn->close();
                 padding: 5px 10px;
                 font-size: 14px;
             }
-             #responseForm input{
-                 max-width:90%;
-             }
 
-             
-            #responseForm label{
-                font-size:23px;
+            #responseForm input {
+                max-width: 90%;
+            }
+
+
+            #responseForm label {
+                font-size: 23px;
                 margin-bottom: 20px;
 
             }
@@ -178,7 +186,7 @@ $conn->close();
 </head>
 
 <body>
-     <div id="container">
+    <div id="container">
         <img id="logo" src="img/wq-icon.png" alt="Logo">
         <form id="responseForm" method="post" action="questions.php">
             <label for="responseInput" id="responseLabel"><?php echo $questionText; ?></label>
@@ -188,7 +196,7 @@ $conn->close();
     </div>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             var responseLabel = $('#responseLabel');
 
             function fetchQuestionText() {
@@ -196,16 +204,16 @@ $conn->close();
                     url: 'questions.php?action=fetch_question',
                     method: 'GET',
                     dataType: 'json',
-                    success: function(response) {
+                    success: function (response) {
                         responseLabel.text(response.question_text);
                     },
-                    error: function(xhr, status, error) {
+                    error: function (xhr, status, error) {
                         console.error("Error fetching question text: ", error);
                     }
                 });
             }
 
-            $('#responseForm').on('submit', function(e) {
+            $('#responseForm').on('submit', function (e) {
                 e.preventDefault();
                 var responseInput = $('#responseInput').val();
 
@@ -214,7 +222,7 @@ $conn->close();
                     method: 'POST',
                     data: { action: 'submit_response', responseInput: responseInput },
                     dataType: 'json',
-                    success: function(response) {
+                    success: function (response) {
                         if (response.success) {
                             $('#responseInput').val('');
                             alert('Response submitted successfully!');
@@ -224,7 +232,7 @@ $conn->close();
                             alert('Failed to submit response: ' + response.error);
                         }
                     },
-                    error: function(xhr, status, error) {
+                    error: function (xhr, status, error) {
                         console.error("Error submitting response: ", error);
                     }
                 });
@@ -235,12 +243,12 @@ $conn->close();
                     url: 'index.php?action=fetch_responses',
                     method: 'GET',
                     dataType: 'json',
-                    success: function(responses) {
+                    success: function (responses) {
                         // Update the responses display in index.php
                         // This function should update the responses in the index.php page
                         console.log("Responses updated", responses);
                     },
-                    error: function(xhr, status, error) {
+                    error: function (xhr, status, error) {
                         console.error("Error updating responses: ", error);
                     }
                 });
@@ -251,4 +259,5 @@ $conn->close();
         });
     </script>
 </body>
+
 </html>
