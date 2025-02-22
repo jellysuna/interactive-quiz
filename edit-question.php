@@ -4,7 +4,6 @@ require 'config.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $questionText = $_POST['question_text'];
 
-    // Update the question text
     $sql = "UPDATE question SET question_text=:questionText WHERE question_id=1";
     $stmt = $conn->prepare($sql);
 
@@ -37,11 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             height: 100%;
             background-image: url("img/bgimg.png");
             background-size: cover;
-            /* Ensures the image covers the entire background */
             background-repeat: no-repeat;
-            /* Prevents repeating the image */
             background-position: center center;
-            /* Centers the background image */
         }
 
         body {
@@ -73,7 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border-radius: 15px;
             background-color: #f9f9f9;
             width: 550px;
-            /* Fixed width */
             box-sizing: border-box;
         }
 
@@ -112,11 +107,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         @media screen and (max-width: 768px) {
             .settings-container {
                 width: 100%;
-                /* Increase the width */
                 min-width: 360px;
-                /* Ensure minimum width */
                 padding: 20px 20px 30px;
-                /* Adjust padding */
             }
 
             .settings-form input,

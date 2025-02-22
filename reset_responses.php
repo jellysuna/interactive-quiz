@@ -1,7 +1,6 @@
 <?php
 require 'config.php';
 
-// Delete all responses
 $sql = "TRUNCATE TABLE responses";
 
 if ($conn->query($sql) === TRUE) {
@@ -12,7 +11,6 @@ if ($conn->query($sql) === TRUE) {
 
 $conn->close();
 
-// Redirect back to index.php
 header("Location: index.php");
 exit();
 ?>

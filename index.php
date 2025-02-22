@@ -167,7 +167,6 @@ if ($stmt->rowCount() > 0) {
                 flex-direction: column;
                 align-items: flex-end;
                 gap: 5px;
-                /* Adjust space between the images */
                 top: 10px;
                 right: 10px;
             }

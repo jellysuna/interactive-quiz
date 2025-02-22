@@ -40,7 +40,6 @@ if (isset($_POST['action']) && $_POST['action'] === 'submit_response') {
     exit();
 }
 
-// For fetching the question text again
 $sql = "SELECT question_text FROM question WHERE question_id=1";
 $stmt = $conn->query($sql);
 
@@ -67,11 +66,8 @@ if ($stmt->rowCount() > 0) {
             height: 100%;
             background-image: url("img/bgimg.png");
             background-size: cover;
-            /* Ensures the image covers the entire background */
             background-repeat: no-repeat;
-            /* Prevents repeating the image */
             background-position: center center;
-            /* Centers the background image */
         }
 
         body {
@@ -143,9 +139,7 @@ if ($stmt->rowCount() > 0) {
         @media screen and (max-width: 768px) {
             #responseForm {
                 max-width: 90%;
-                /* Reduce the width */
                 padding: 40px 20px;
-                /* Adjust padding */
             }
 
             #logo {
@@ -226,7 +220,6 @@ if ($stmt->rowCount() > 0) {
                         if (response.success) {
                             $('#responseInput').val('');
                             alert('Response submitted successfully!');
-                            // Optionally, you can trigger a function to update responses in index.php
                             updateResponsesInResponsesPHP();
                         } else {
                             alert('Failed to submit response: ' + response.error);
@@ -244,8 +237,7 @@ if ($stmt->rowCount() > 0) {
                     method: 'GET',
                     dataType: 'json',
                     success: function (responses) {
-                        // Update the responses display in index.php
-                        // This function should update the responses in the index.php page
+                        // This function update the responses in the index.php page
                         console.log("Responses updated", responses);
                     },
                     error: function (xhr, status, error) {
